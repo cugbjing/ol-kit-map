@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Controls, Map, Popup, createDataLayer, loadDataLayer } from '@bayer/ol-kit' 
+import { Controls, Map, Popup } from '@bayer/ol-kit' 
 import DataLoader from './components/DataLoader'
 import TimeTicker from './TimeTicker'
 import CountyLoader from './components/CountyLoader'
@@ -10,6 +10,7 @@ function App() {
   const [showCounty, setShowCounty] = useState(false)
   const onMapInit = map => {
     window.map = map
+    console.log('map1',map)
 
     //const dataLayer = await loadDataLayer(map, 'https://opendata.arcgis.com/datasets/628578697fb24d8ea4c32fa0c5ae1843_0.geojson')
     //console.log('dataLayer', dataLayer)
@@ -19,12 +20,15 @@ function App() {
     // map.addLayer(createDataLayer('us_covid'))
   }
 
+  const switchLayer = () => {
+    setShowCounty(!showCounty)
+  }
+
   return (
     <Map onMapInit={onMapInit} fullScreen>
-      <button style={{position: 'absolute', textAlign: 'center', fontSize: '16px'}} 
-      onClick={() => {
-    setShowCounty(!showCounty)
-  }}>
+      <button 
+        style={{position: 'absolute', fontSize: '16px'}} 
+        onClick={switchLayer}>
         {showCounty? 'Switch to State' : 'Switch to County'} 
       </button>
       {showCounty ? <CountyLoader /> : <div>

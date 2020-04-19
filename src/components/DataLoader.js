@@ -78,14 +78,14 @@ class DataLoader extends Component {
             return fade(colors[3], 0.4)
         } else if (value >= 400 && value < 800) {
             return fade(colors[4], 0.4)
-        } else if (value >= 800 && value < 1600) {
+        } else if (value >= 800 && value < 2000) {
             return fade(colors[5], 0.4)
-        } else if (value >= 1600 && value < 4000){
-            return fade(colors[6], 0.4)
-        }else if (value >= 4000 && value < 10000){
-            return fade(colors[7], 0.4)
+        } else if (value >= 2000 && value < 6000){
+            return fade(colors[6], 0.5)
+        }else if (value >= 6000 && value < 15000){
+            return fade(colors[7], 0.6)
         }else {
-            return fade(colors[8], 0.4)
+            return fade(colors[8], 0.7)
         }
     }
     
@@ -113,7 +113,7 @@ class DataLoader extends Component {
             feat.setProperties({ 
                 totalCasesTillDate: total, 
                 casesOnDate: numOnDate,
-                Title: `State: ${feat.get('NAME')}`,
+                title: `State: ${feat.get('NAME')}`,
                 historyData: dataByState,
             })
             const color = this.getColor(total)
@@ -130,9 +130,17 @@ class DataLoader extends Component {
 
         })
 
+        const prevLayers = map.getLayers()
+            .getArray()
+            .filter((l) => l.get('title') === 'State Level Data Layer' || l.get('title') === 'State Level Data Layer')
+        
+        if(!_.isEmpty(prevLayers)){
+            prevLayers.forEach( layer => {
+                map.removeLayer(layer)
+            })
+        }
         const source = new olVectorSource({ features })
         const vectorLayer = new olVectorLayer({ source })
-        // Todo: need to remove previous layer
         vectorLayer.set('title', 'State Level Data Layer')
         map.addLayer(vectorLayer)
     }

@@ -9,6 +9,7 @@ import olStyle from 'ol/style/style'
 import olFill from 'ol/style/fill'
 import olStroke from 'ol/style/stroke'
 import proj from 'ol/proj'
+import _ from 'lodash'
 
 const countyData = require('../data/gz_2010_us_county_20m.json');
 
@@ -75,6 +76,13 @@ function CountyLoader(props) {
             feature.setProperties({ ...customProperties, title: properties.NAME })
             source.addFeature(feature)
         })
+
+        const prevTitle = 'State Level Data Layer'
+        const prevLayer = map.getLayers().getArray().filter((l) => l.get('title') === prevTitle)
+        if(!_.isEmpty(prevLayer)){
+            console.log('layer', prevLayer)
+            map.removeLayer(prevLayer[0])
+        }
         vectorLayer.set('title', 'County Level Data Layer')
         map.addLayer(vectorLayer)
     }
