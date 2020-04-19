@@ -46,10 +46,9 @@ export const Tick = styled.div`
 `
 
 function TimeTicker (props) {
-  const { dates = [] } = props
+  const { dates = [], setSelectedDate } = props
   const [active, setActive] = useState(null)
   const [selected, setSelected] = useState(null)
-  // console.log(active?.date && moment(active?.dateChecked))
 
   return (
     <Container className='_popup_boundary'>
@@ -58,12 +57,15 @@ function TimeTicker (props) {
           <Tick
             key={i}
             active={active === date}
-            onClick={() => setSelected(date)}
+            onClick={() => {
+              setSelected(date)
+              setSelectedDate(date)
+            }}
             onMouseEnter={() => setActive(date)}
             onMouseLeave={() => setActive(selected)} />
         )}
       </Ticks>
-      <ActiveContainer>{active?.date && moment(active?.dateChecked).toString()}</ActiveContainer>
+      <ActiveContainer>{active?.label}</ActiveContainer>
     </Container>
   )
 }
