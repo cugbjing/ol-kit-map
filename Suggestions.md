@@ -3,7 +3,8 @@
 - [ ] Have more default layout for the popup component, right now it is very plain, maybe add a dark version as well
 - [ ] To add on previous point, maybe have a theme option for users to select different style for the map and other components (popup window, controllers)
 - [ ] Potential legend component
-- [ ] Time ticker component to handle temporal dataset
+- [ ] Add time ticker component to handle temporal dataset
+- [ ] Add function to export map to PDF or Image
 
 ## Suggestions for the document
 - [ ] The code snippet in the front page of the documentation doesn't seem to work directly, the github repo has the correct one

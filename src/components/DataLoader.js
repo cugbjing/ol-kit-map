@@ -55,10 +55,12 @@ class DataLoader extends Component {
     
     getHistoryDataByState = (stateFip, date, data) => {
         //search for the state data knowing the date and state fip, will return the history data before the date
-        const dataByDate = data.filter(d => d.fips.toString() === stateFip && d.date <= date)
-        const dataOnDate = data.filter(d => d.fips.toString() === stateFip && d.date === date)
+        const dataByState = data.filter(d => d.fips.toString() === stateFip).reverse()
+        const dataByDate = dataByState.filter(d => d.date <= date)
+        const dataOnDate = dataByState.filter(d => d.date === date)
 
         return {
+            dataByState,
             dataByDate,
             dataOnDate
         }
@@ -105,13 +107,14 @@ class DataLoader extends Component {
         } : selectedDate
         features.forEach(feat => {
             const stateFips = feat.get('STATE')
-            const { dataByDate, dataOnDate } = this.getHistoryDataByState(stateFips, selected.date, historyData)
+            const { dataByState, dataByDate, dataOnDate } = this.getHistoryDataByState(stateFips, selected.date, historyData)
             const total = this.getTotal(dataByDate, 'positive')
             const numOnDate = this.getNum(dataOnDate, 'positive')
             feat.setProperties({ 
                 totalCasesTillDate: total, 
                 casesOnDate: numOnDate,
-                Title: `State: ${feat.get('NAME')}` 
+                Title: `State: ${feat.get('NAME')}`,
+                historyData: dataByState,
             })
             const color = this.getColor(total)
             const style = new olStyle({
@@ -129,6 +132,7 @@ class DataLoader extends Component {
 
         const source = new olVectorSource({ features })
         const vectorLayer = new olVectorLayer({ source })
+        // Todo: need to remove previous layer
         vectorLayer.set('title', 'State Level Data Layer')
         map.addLayer(vectorLayer)
     }

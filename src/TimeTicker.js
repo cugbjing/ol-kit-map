@@ -14,7 +14,7 @@ export const Container = styled.div`
   margin: auto;
   margin-top: 0;
   justify-content: center;
-  width: 80%;
+  width: 60%;
   height: 80px;
   border-radius: 6px;
   background: white;

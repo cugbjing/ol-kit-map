@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
-import { Controls, Map, Popup, LayerPanel, createDataLayer, loadDataLayer } from '@bayer/ol-kit'
-
+import { Controls, Map, Popup, createDataLayer, loadDataLayer } from '@bayer/ol-kit' 
 import DataLoader from './components/DataLoader'
 import TimeTicker from './TimeTicker'
+import CountyLoader from './components/CountyLoader'
 
 function App() {
   const [dates, setDates] = useState([])
   const [selectedDate, setSelectedDate] = useState([])
+  const [showCounty, setShowCounty] = useState(false)
   const onMapInit = map => {
     window.map = map
 
@@ -18,20 +19,26 @@ function App() {
     // map.addLayer(createDataLayer('us_covid'))
   }
 
-  //console.log('selected:', selected)
-
   return (
     <Map onMapInit={onMapInit} fullScreen>
-      <DataLoader 
-        setDates={setDates} 
-        selectedDate={selectedDate}/>
+      <button style={{position: 'absolute', textAlign: 'center', fontSize: '16px'}} 
+      onClick={() => {
+    setShowCounty(!showCounty)
+  }}>
+        {showCounty? 'Switch to State' : 'Switch to County'} 
+      </button>
+      {showCounty ? <CountyLoader /> : <div>
+        <DataLoader
+          setDates={setDates}
+          selectedDate={selectedDate} />
+        <TimeTicker
+          dates={dates}
+          setSelectedDate={setSelectedDate}/>
+        </div>}
+
       <Controls />
       <Popup />
-      <TimeTicker 
-        dates={dates}
-        setSelectedDate={setSelectedDate} 
-        />
-      <LayerPanel/>
+
     </Map>
   )
 }
