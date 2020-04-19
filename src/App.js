@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Controls, Map, Popup, createDataLayer, loadDataLayer } from '@bayer/ol-kit'
+import { Controls, Map, Popup, LayerPanel, createDataLayer, loadDataLayer } from '@bayer/ol-kit'
 
 import DataLoader from './components/DataLoader'
 import TimeTicker from './TimeTicker'
@@ -31,6 +31,7 @@ function App() {
         dates={dates}
         setSelectedDate={setSelectedDate} 
         />
+      <LayerPanel/>
     </Map>
   )
 }

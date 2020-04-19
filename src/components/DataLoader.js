@@ -23,6 +23,10 @@ const features = format.readFeatures(boundaryData, {
 
 class DataLoader extends Component {
 
+    // constructor(props){
+    //     //To do: make a legend
+    // }
+
     getUniqueDates = (data) => {
         //return a sorted dates
         const allDates = new Set()
@@ -125,6 +129,7 @@ class DataLoader extends Component {
 
         const source = new olVectorSource({ features })
         const vectorLayer = new olVectorLayer({ source })
+        vectorLayer.set('title', 'State Level Data Layer')
         map.addLayer(vectorLayer)
     }
 
@@ -137,7 +142,6 @@ class DataLoader extends Component {
     render() {
         this.loadData()
         return null
-        //To do: make a legend
     }
 }
 
