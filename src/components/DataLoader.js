@@ -68,25 +68,15 @@ class DataLoader extends Component {
     
     getColor = (value) => {
         const colors = [red[100], red[200], red[300], red[400], red[500], red[600], red[700], red[800], red[900]]
-        if (value >= 0 && value < 50){
-            return fade(colors[0], 0.4)
-        } else if (value >= 50 && value < 100) {
-            return fade(colors[1], 0.4)
-        } else if (value >= 100 && value < 200) {
-            return fade(colors[2], 0.4)
-        } else if (value >= 200 && value < 400) {
-            return fade(colors[3], 0.4)
-        } else if (value >= 400 && value < 800) {
-            return fade(colors[4], 0.4)
-        } else if (value >= 800 && value < 2000) {
-            return fade(colors[5], 0.4)
-        } else if (value >= 2000 && value < 6000){
-            return fade(colors[6], 0.5)
-        }else if (value >= 6000 && value < 15000){
-            return fade(colors[7], 0.6)
-        }else {
-            return fade(colors[8], 0.7)
-        }
+        return value >= 15000 ? fade(colors[8], 0.7) :
+            value >= 6000 ? fade(colors[7], 0.6) :
+            value >= 2000 ? fade(colors[6], 0.5) :
+            value >= 800 ? fade(colors[5], 0.4) :
+            value >= 400 ? fade(colors[4], 0.4) :
+            value >= 200 ? fade(colors[3], 0.4) :
+            value >= 100 ? fade(colors[2], 0.4) :
+            value >= 50 ? fade(colors[1], 0.4) :
+            fade(colors[0], 0.4)
     }
     
     getTotal = (arr, key) => {
@@ -100,6 +90,8 @@ class DataLoader extends Component {
     loadData = () => {
         // function to load the color map data
         const { map, selectedDate } = this.props
+        const vectorLayer = new olVectorLayer({ source: new olVectorSource() })
+        const source = vectorLayer.getSource()
         const selected = _.isEmpty(selectedDate)?
         {
             date: 20200228,
@@ -127,20 +119,19 @@ class DataLoader extends Component {
                 })
             })
             feat.setStyle(style)
-
+            source.addFeature(feat)
         })
 
         const prevLayers = map.getLayers()
             .getArray()
-            .filter((l) => l.get('title') === 'State Level Data Layer' || l.get('title') === 'State Level Data Layer')
+            .filter((l) => l.get('title') === 'State Level Data Layer' || l.get('title') === 'County Level Data Layer')
         
         if(!_.isEmpty(prevLayers)){
             prevLayers.forEach( layer => {
                 map.removeLayer(layer)
             })
         }
-        const source = new olVectorSource({ features })
-        const vectorLayer = new olVectorLayer({ source })
+
         vectorLayer.set('title', 'State Level Data Layer')
         map.addLayer(vectorLayer)
     }

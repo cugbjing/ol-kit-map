@@ -10,7 +10,6 @@ function App() {
   const [showCounty, setShowCounty] = useState(false)
   const onMapInit = map => {
     window.map = map
-    console.log('map1',map)
 
     //const dataLayer = await loadDataLayer(map, 'https://opendata.arcgis.com/datasets/628578697fb24d8ea4c32fa0c5ae1843_0.geojson')
     //console.log('dataLayer', dataLayer)

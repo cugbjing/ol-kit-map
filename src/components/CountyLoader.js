@@ -77,12 +77,16 @@ function CountyLoader(props) {
             source.addFeature(feature)
         })
 
-        const prevTitle = 'State Level Data Layer'
-        const prevLayer = map.getLayers().getArray().filter((l) => l.get('title') === prevTitle)
-        if(!_.isEmpty(prevLayer)){
-            console.log('layer', prevLayer)
-            map.removeLayer(prevLayer[0])
+        const prevLayers = map.getLayers()
+            .getArray()
+            .filter((l) => l.get('title') === 'State Level Data Layer' || l.get('title') === 'County Level Data Layer')
+        
+        if(!_.isEmpty(prevLayers)){
+            prevLayers.forEach( layer => {
+                map.removeLayer(layer)
+            })
         }
+
         vectorLayer.set('title', 'County Level Data Layer')
         map.addLayer(vectorLayer)
     }
