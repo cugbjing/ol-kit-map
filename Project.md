@@ -3,6 +3,11 @@ Apply ol-kit to display and interact with COVID-19 dataset
 
 **Note** Need to link with the `mapathon` branch from https://github.com/cugbjing/ol-kit to be able to display the historical data chart in the popup tab
 
+### Team Members
+    * Chirag Nakrani
+    * Wenpeng Feng
+    * Jing Deng
+
 ### Overview
 - [ ] Two data layers
     * State Level Data Layer: pre-downloaded state level history data stored under src/data folder, data source: https://covidtracking.com/api
