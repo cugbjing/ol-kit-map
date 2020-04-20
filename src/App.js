@@ -3,6 +3,7 @@ import { Controls, Map, Popup } from '@bayer/ol-kit'
 import DataLoader from './components/DataLoader'
 import TimeTicker from './TimeTicker'
 import CountyLoader from './components/CountyLoader'
+import Legend from './components/Legend'
 
 function App() {
   const [dates, setDates] = useState([])
@@ -37,10 +38,11 @@ function App() {
         <TimeTicker
           dates={dates}
           setSelectedDate={setSelectedDate}/>
-        </div>}
-
+        <Legend />
+      </div>}
       <Controls />
       <Popup />
+      
 
     </Map>
   )
