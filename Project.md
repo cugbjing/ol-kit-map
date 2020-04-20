@@ -17,8 +17,12 @@ Apply ol-kit to display and interact with COVID-19 dataset
 
 
 ![Figure 1. Choropleth map with time ticker](/images/fig1.png)
+Figure 1. Choropleth map with time ticker
+<br/><br/>
 
 ![Figure 2. Historical data for state](/images/fig2.png)
+Figure 2. Historical data for state
+<br/><br/>
 
 ![Figure 3. Live stream data for county](/images/fig3.png)
-
+Figure 3. Live stream data for county
