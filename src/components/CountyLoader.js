@@ -11,7 +11,7 @@ import olStroke from 'ol/style/stroke'
 import proj from 'ol/proj'
 import _ from 'lodash'
 
-const countyData = require('../data/gz_2010_us_county_20m.json');
+const countyData = require('../data/gz_2010_us_county_20m.json')
 
 const getCustomProperties = (covidData) => {
 
@@ -30,21 +30,21 @@ const getCustomProperties = (covidData) => {
 };
 
 const getStates = () => {
-    const stateData = require('../data/gz_2010_us_states_20m.json');
+    const stateData = require('../data/gz_2010_us_states_20m.json')
     const states = {}
     stateData.features.forEach(state => {
         const { properties } = state
         states[properties.STATE] = properties.NAME
     })
-    return states;
+    return states
 }
 
 function CountyLoader(props) {
 
-    const states = getStates();
+    const states = getStates()
     const vectorLayer = new olVectorLayer({ source: new olVectorSource() })
     const source = vectorLayer.getSource()
-    const { map } = props;
+    const { map } = props
     const dataFetcher = async () => {
 
         const covidDataUrl = 'https://coronavirus-tracker-api.herokuapp.com/v2/locations?source=nyt&country_code=US&timelines=false'
@@ -52,8 +52,9 @@ function CountyLoader(props) {
         const response = await request.json()
         const covidData = response.locations;
 
-        countyData.features.forEach(state => {
-            const { geometry, properties } = state
+        countyData.features.forEach(county => {
+            const { geometry, properties } = county
+            const countyFips = properties.STATE + properties.COUNTY
 
             const customProperties = getCustomProperties(covidData.find((cData) => cData.county === properties.NAME
                 && cData.province === states[properties.STATE]))
@@ -73,7 +74,7 @@ function CountyLoader(props) {
                     })
                 })
             )
-            feature.setProperties({ ...customProperties, title: properties.NAME })
+            feature.setProperties({ ...customProperties, countyFips, title: properties.NAME })
             source.addFeature(feature)
         })
 

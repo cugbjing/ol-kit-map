@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Controls, Map, Popup } from '@bayer/ol-kit' 
+import { Controls, Map, Popup } from '@bayer/ol-kit'
 import DataLoader from './components/DataLoader'
 import TimeTicker from './TimeTicker'
 import CountyLoader from './components/CountyLoader'
@@ -43,7 +43,6 @@ function App() {
       <Controls />
       <Popup />
       
-
     </Map>
   )
 }
